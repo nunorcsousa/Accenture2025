@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestão de Pedidos McDonald's</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #ffcc00;
+    }
+
+    .navbar {
+      background-color: #da291c;
+    }
+
+    .btn-mcd {
+      background-color: #da291c;
+      color: white;
+    }
+
+    .btn-mcd:hover {
+      background-color: #b91e14;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark px-3 fixed-top">
+    <a class="navbar-brand" href="#">McDonald's Pedidos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+      aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#novoPedido">Novo Pedido</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#ativos">Pedidos Ativos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#satisfeitos">Pedidos Satisfeitos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <div class="vh-100">
+      <h4 id="novoPedido">Novo Pedido</h4>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <input type="text" id="nomeCliente" class="form-control" placeholder="Nome do cliente" />
+        </div>
+      </div>
+
+      <div class="row g-3 mb-2 align-items-center">
+        <div class="col-md-3">
+          <select id="produto" class="form-select" onchange="atualizarSubprodutos()">
+            <option value="">Produto...</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <select id="subproduto" class="form-select" onchange="atualizarExtras()">
+            <option value="">Subproduto...</option>
+          </select>
+        </div>
+        <div class="col-md-4" id="extraContainer" style="display:none;">
+          <select id="extra" class="form-select">
+            <option value="">Extra...</option>
+          </select>
+        </div>
+        <div class="col-md-1 d-grid">
+          <button class="btn btn-secondary" onclick="adicionarProdutoAoPedido()">+ Produto</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="listaProdutosTemp" class="mb-3"></div>
+    <button class="btn btn-mcd mb-4" onclick="criarPedido()">Criar Pedido</button>
+
+    <h4 id="ativos" class="mt-4">Pedidos Ativos</h4>
+    <div class="mb-3">
+      <label class="form-label">Filtrar pedidos:</label>
+      <select id="filtroTipo" class="form-select w-auto d-inline-block" onchange="atualizarTabela()">
+        <option value="todos">Todos</option>
+        <option value="comExtras">Com extras</option>
+        <option value="semExtras">Sem extras</option>
+      </select>
+    </div>
+
+    <table class="table table-bordered table-hover">
+      <thead class="table-danger">
+        <tr>
+          <th>#</th>
+          <th>Cliente</th>
+          <th>Produtos</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaPedidos"></tbody>
+    </table>
+
+    <h4 id="satisfeitos">Pedidos Satisfeitos</h4>
+    <ul id="pedidosSatisfeitos" class="list-group"></ul>
+  </div>
+
+  <script src="./dataModels.js"></script>
+  <script src="./database.service.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

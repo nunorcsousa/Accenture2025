@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Desafio McDonalds</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+
+<body class="container">
+    <h1 class="text-center my-4">Desafio McDonalds</h1>
+
+    <!-- Navegação entre tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="createOrderTab" data-bs-toggle="tab"
+                data-bs-target="#createOrderTabPane" type="button" role="tab" aria-controls="createOrderTabPane"
+                aria-selected="true">Criar Pedido</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="removeOrderTab" data-bs-toggle="tab" data-bs-target="#removeOrderTabPane"
+                type="button" role="tab" aria-controls="removeOrderTabPane" aria-selected="false">Remover
+                Pedido</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="activeOrdersTab" data-bs-toggle="tab" data-bs-target="#activeOrdersTabPane"
+                type="button" role="tab" aria-controls="activeOrdersTabPane" aria-selected="false">Pedidos
+                Ativos</button>
+        </li>
+    </ul>
+    <main>
+        <div class="tab-content" id="myTabContent">
+            <!-- Tab para criar pedido -->
+            <div class="tab-pane fade show active" id="createOrderTabPane" role="tabpanel"
+                aria-labelledby="createOrderTab" tabindex="0">
+                <h2 class="text-center">Criar Pedido</h2>
+                <form id="createOrderForm">
+                    <!-- nome cliente form -->
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label col-3">Nome do Cliente</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="userName" name="customerName"
+                                    aria-describedby="nameHelp" required>
+                                <div id="nameHelp" class="form-text">Introduza o seu nome.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- select produtos form -->
+                    <div class="mb-3">
+                        <label for="productSelect" class="form-label">Escolha o Produto</label>
+                        <select class="form-select" id="productSelect" name="productSelect" required>
+                            <option>Nenhum</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div id="productExtraHelp" class="form-text">Selecione extras opcionais para o seu pedido.</div>
+                        <label id="productExtra" class="form-label">Adicionar Extras</label>
+                    </div>
+                    <!-- select acompanhamentos form -->
+                    <div class="mb-3">
+                        <label for="sidedishSelect" class="form-label">Escolha o acompanhamento</label>
+                        <select class="form-select" id="sidedishSelect" name="sidedishSelect" required>
+                            <option>Nenhum</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div id="sidedishExtraHelp" class="form-text">Selecione extras opcionais para o seu
+                            acompanhamento.</div>
+                        <label id="sidedishExtra" class="form-label">Adicionar Extras para o acompanhamento</label>
+                    </div>
+                    <!-- select bebidas form -->
+                    <div class="mb-3">
+                        <label for="beverageSelect" class="form-label">Escolha a bebida</label>
+                        <select class="form-select" id="beverageSelect" name="beverageSelect" required>
+                            <option>Nenhuma</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div id="beverageExtraHelp" class="form-text">Selecione extras opcionais para a sua bebida.
+                        </div>
+                        <label id="beverageExtra" class="form-label">Adicionar Extras para a bebida</label>
+                    </div>
+
+                    <!-- botão para finalizar pedido -->
+                    <button id="createOrderBTN" type="button" class="btn btn-primary">Finalizar
+                        Pedido</button>
+                </form>
+                <!-- Tabela para exibir pedido efetuado -->
+                <table id="orderTable" class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Extras</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody">
+                        <!-- Os pedidos serão adicionados aqui -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tab para remover pedido -->
+            <div class="tab-pane fade" id="removeOrderTabPane" role="tabpanel" aria-labelledby="removeOrderTab"
+                tabindex="0">
+                <h2 class="text-center">Remover Pedido</h2>
+            </div>
+
+            <!-- Tab para visualizar pedidos ativos -->
+            <div class="tab-pane fade" id="activeOrdersTabPane" role="tabpanel" aria-labelledby="activeOrdersTab"
+                tabindex="0">
+                <h2 class="text-center">Pedidos Ativos</h2>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script src="dataModels.js"></script>
+    <script src="database.service.js"></script>
+    <script src="sampleData.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const productSelect = document.getElementById('productSelect');
+            const productExtra = document.getElementById('productExtra');
+            const sidedishSelect = document.getElementById('sidedishSelect');
+            const sidedishExtra = document.getElementById('sidedishExtra');
+            const beverageSelect = document.getElementById('beverageSelect');
+            const beverageExtra = document.getElementById('beverageExtra');
+            const createOrderForm = document.getElementById('createOrderForm');
+
+            // Popula o select com os produtos
+            productNameSanduichesList.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product;
+                option.textContent = product;
+                productSelect.appendChild(option);
+            });
+
+            // adiciona checkboxes com os extras
+            productExtraSanduichesList.forEach(extra => {
+                const checkbox = document.createElement('input');
+                checkbox.value = extra;
+                checkbox.type = 'checkbox';
+                checkbox.name = 'productExtra';
+                checkbox.ariaLabel = extra;
+                checkbox.id = extra;
+                checkbox.className = 'form-check-input';
+                const label = document.createElement('label');
+                label.textContent = extra;
+                label.className = 'form-check-label';
+                label.setAttribute('for', extra);
+                const div = document.createElement('div');
+                div.className = 'mb-3';
+                div.className = 'form-check';
+                div.appendChild(label);
+                div.appendChild(checkbox);
+                productExtra.after(div);
+            });
+
+            // Popula o select com os acompanhamentos
+            productNameAcompanhamentosList.forEach(sidedish => {
+                const option = document.createElement('option');
+                option.value = sidedish;
+                option.textContent = sidedish;
+                sidedishSelect.appendChild(option);
+            });
+
+            // adiciona checkboxes com os extras para o acompanhamento
+            productExtraAcompanhamentosList.forEach(extra => {
+                const checkbox = document.createElement('input');
+                checkbox.value = extra;
+                checkbox.type = 'checkbox';
+                checkbox.name = 'sidedishExtra';
+                checkbox.ariaLabel = extra;
+                checkbox.id = extra;
+                checkbox.className = 'form-check-input';
+                const label = document.createElement('label');
+                label.textContent = extra;
+                label.className = 'form-check-label';
+                label.setAttribute('for', extra);
+                const div = document.createElement('div');
+                div.className = 'mb-3';
+                div.className = 'form-check';
+                div.appendChild(label);
+                div.appendChild(checkbox);
+                sidedishExtra.after(div);
+            });
+
+            // Popula o select com as bebidas
+            productNameBebidasList.forEach(beverage => {
+                const option = document.createElement('option');
+                option.value = beverage;
+                option.textContent = beverage;
+                beverageSelect.appendChild(option);
+            });
+
+            // adiciona checkboxes com os extras para a bebida
+            productExtraBebidasList.forEach(extra => {
+                const checkbox = document.createElement('input');
+                checkbox.value = extra;
+                checkbox.type = 'checkbox';
+                checkbox.name = 'beverageExtra';
+                checkbox.ariaLabel = extra;
+                checkbox.id = extra;
+                checkbox.className = 'form-check-input';
+                const label = document.createElement('label');
+                label.textContent = extra;
+                label.className = 'form-check-label';
+                label.setAttribute('for', extra);
+                const div = document.createElement('div');
+                div.className = 'mb-3';
+                div.className = 'form-check';
+                div.appendChild(label);
+                div.appendChild(checkbox);
+                beverageExtra.after(div);
+            });
+        });
+
+        // evento para o botão de finalizar pedido
+        const createOrderBTN = document.getElementById('createOrderBTN');
+        createOrderBTN.addEventListener('click', function () {
+            const selectedProducts = [];
+            selectedProducts.push({
+                product: document.getElementById('productSelect').value,
+                extras: Array.from(document.querySelectorAll('input[name="productExtra"]:checked')).map(checkbox => checkbox.value)
+            });
+            selectedProducts.push({
+                product: document.getElementById('sidedishSelect').value,
+                extras: Array.from(document.querySelectorAll('input[name="sidedishExtra"]:checked')).map(checkbox => checkbox.value)
+            });
+            selectedProducts.push({
+                product: document.getElementById('beverageSelect').value,
+                extras: Array.from(document.querySelectorAll('input[name="beverageExtra"]:checked')).map(checkbox => checkbox.value)
+            });
+            // add user and products to order
+            const user = document.getElementById('userName').value;
+            newUser = new User(user); 
+            const order = new Order();
+            order.userId = newUser.id;
+            order.products = selectedProducts;
+            order.createOrder();
+            const form = document.getElementById('createOrderForm');
+            form.insertAdjacentHTML('afterend', `<div id="orderCreatedAlert" class="alert alert-success mt-3" role="alert">Pedido criado com sucesso!</div>`);
+            // add info to table
+            });
+            
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mickey D's Challenge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
+
+<body class="bg-dark">
+    <br>
+
+    <div class="container text-center text-white font-weight-bold">
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col-6">
+                <h1>Mickey D's Challenge</h1>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center text-white font-weight-bold">
+        <div class="row my-3">
+            <div class="col-1">
+                <label for="inputName" class="form-label">Nome</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="inputName" oninput="onInputName()">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col-8">
+                <div class="row mt-3">
+                    <div class="col-1">
+                        <label for="selectProductType" class="form-label">Artigo</label>
+                    </div>
+                    <div class="col-11">
+                        <select onchange="changeProductOptions()" class="form-control" id="selectProductType">
+                            <option>Hamburger</option>
+                            <option>Acompanhamento</option>
+                            <option>Bebida</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row m-1">
+                    <select class="form-control" id="selectProduct">
+                    </select>
+                </div>
+                <div class="row m-1">
+                    <div class="col-6">
+                        <select class="form-control" id="selectExtra">
+                        </select>
+                    </div>
+                    <div class="col-6 d-grid gap-2">
+                        <button type="button" class="btn btn-success" id="btnAddProduct" onclick="addProduct()"
+                            disabled>Adicionar Produto</button>
+                    </div>
+                </div>
+                <div class="row mt-1" id="currentOrderTable">
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <button type="button" class="mb-4 btn btn-primary" id="btnFinishOrder" onclick="finishOrder()"
+                        disabled>Finalizar Pedido</button>
+                </div>
+                <div class="row mt-4" id="ordersTable">
+                </div>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+    <script src="dataModel.js"></script>
+    <script src="database.service.js"></script>
+    <script src="sampleData.js"></script>
+    <script src="./Libs/tableLib.js"></script>
+
+    <script>
+        //Function that is called whenever you change which product you're using
+        function changeProductOptions() {
+            switch (document.getElementById("selectProductType").value) {
+                case "Hamburger":
+                    createOptions("selectProduct", productNameSanduichesList);
+                    document.getElementById("selectExtra").disabled = false;
+                    createOptions("selectExtra", productExtraSanduichesList);
+                    break;
+
+                case "Acompanhamento":
+                    createOptions("selectProduct", productNameAcompanhamentosList);
+                    //clear the old options
+                    document.getElementById("selectExtra").innerHTML = "";
+                    //acompanhamentos não tem extras
+                    document.getElementById("selectExtra").disabled = true;
+                    break;
+
+                case "Bebida":
+                    createOptions("selectProduct", productNameBebidasList);
+                    document.getElementById("selectExtra").disabled = false;
+                    createOptions("selectExtra", productExtraBebidasList);
+                    break;
+
+                default:
+                    console.log("How?!");
+                    break;
+            }
+        }
+
+        //Function that creates the options for an input select
+        function createOptions(selectId, selectList) {
+            //clear the old options
+            document.getElementById(`${selectId}`).innerHTML = "";
+
+            for (let i = 0; i < selectList.length; i++) {
+                const paragraph = `<option>${selectList[i]}</option>`;
+                document.getElementById(`${selectId}`).insertAdjacentHTML('beforeend', paragraph);
+            }
+        }
+
+        function onInputName() {
+            if (document.getElementById("inputName").value.trim() != "") {
+                document.getElementById("btnAddProduct").disabled = false;
+            }
+        }
+
+
+        let currentOrderTable = new MyTable("currentOrderTable");
+        currentOrderTable.initTable(["Artigo", "Extra", "Remover"]);
+        let ordersTable = new MyTable("ordersTable");
+        ordersTable.initTable(["Cliente", "Pedido", "Estado"]);
+        let order = undefined;
+        let orders = JSON.parse(getLocalStorage("orders"));
+        let productsString = "";
+
+        //Function that deletes a prouct from an order trough a table row
+        function deleteProduct(productId) {
+            //First let's delete the product from the order array
+            const index = order.products.findIndex(product => product.id === productId);
+            order.products.splice(index, 1);
+
+            //we should rewrite the table next
+            currentOrderTable.cleanTableBody();
+            order.products.forEach(product => {
+                currentOrderTable.addArrayToTableRow([product.name, product.extra, `<button type="button" class="btn btn-danger" onclick="deleteProduct(${product.id})">Remover</button>`]);
+            });
+
+            //Check if there's any products to disable finish order button and make order undefined
+            if (order.products.length == 0) {
+                document.getElementById("btnFinishOrder").disabled = true;
+                order = undefined;
+            }
+        }
+
+        //function that starts a order or adds product to existing one
+        function addProduct() {
+            if (order == undefined) {
+                order = new Order(document.getElementById("inputName").value);
+                document.getElementById("btnFinishOrder").disabled = false;
+                document.getElementById("inputName").disabled = true;
+            }
+            const addedProduct = order.addProduct(document.getElementById("selectProduct").value, document.getElementById("selectExtra").value);
+            currentOrderTable.addArrayToTableRow([addedProduct.name, addedProduct.extra, `<button type="button" class="btn btn-danger" onclick="deleteProduct(${addedProduct.id})">Remover</button>`]);
+            onInputName();
+        }
+
+        //function that finishes an order after all the products are added, also write it in the table
+        function finishOrder() {
+            orders.push(order); // that's literally it for now
+            createLocalStorage('orders', JSON.stringify(orders))
+
+            ordersTable.cleanTableBody();
+            writeOrdersTable();
+
+            //reset what needs to be reset
+            currentOrderTable.cleanTableBody();
+            document.getElementById("selectProductType").value = "Hamburger"
+            document.getElementById("btnFinishOrder").disabled = true;
+            document.getElementById("btnAddProduct").disabled = true;
+            document.getElementById("inputName").value = "";
+            document.getElementById("inputName").disabled = false;
+            changeProductOptions();
+            order = undefined;
+        }
+
+        function writeOrdersTable() {
+            orders.forEach(order => {
+                order.products.forEach(product => {
+                    productsString += `
+                        <p class="font-weight-bold mb-0">${product.name}</p>
+                        <p class="font-weight-light">${product.extra}</p>
+                        `
+                }),
+                ordersTable.addArrayToTableRow([order.requesterName, productsString, (order.ready ? "Pronta" : "Por Fazer")]);
+                productsString = "";
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            writeOrdersTable();
+        });
+
+        //start with options for hamburger since that's the default 
+        createOptions("selectProduct", productNameSanduichesList);
+        createOptions("selectExtra", productExtraSanduichesList);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TinderBooks</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="./Styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container py-4">
+    <div id="loginSection">
+      <div class="app-title"><i class="fa-solid fa-book-open"></i> TinderBooks</div>
+      <h2 class="text-center mb-3">Entrar / Registar</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card p-4">
+            <input type="text" id="username" class="form-control mb-2" placeholder="Nome de utilizador" />
+            <input type="password" id="password" class="form-control mb-2" placeholder="Palavra-passe" />
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-success w-50 me-1" onclick="register()">Registar</button>
+              <button class="btn btn-primary w-50 ms-1" onclick="login()">Entrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="appContainer">
+      <div class="app-title"><i class="fa-solid fa-book-open"></i> TinderBooks</div>
+
+      <div class="d-flex flex-wrap justify-content-center align-items-center w-100 mb-3 gap-2">
+        <input id="searchInput" class="form-control" style="max-width: 30%" placeholder="Pesquisar livros..."
+          onclick="resetCategories()" />
+        <button class="btn btn-light" onclick="searchBooks()">
+          <i class="fas fa-search"></i>
+        </button>
+        <label id="currentUserName"></label>
+        <button class="btn btn-dark" onclick="logout()">Sair</button>
+      </div>
+
+      <select id="categorySelect" class="form-select category-select mb-3" 
+        onchange="searchByCategory()">
+      </select>
+
+      <div class="card-stack mb-3" id="cardStack"></div>
+
+      <div class="swipe-buttons">
+        <button class="btn btn-outline-light" onclick="rejectBook()">
+          <i class="fas fa-times"></i> Rejeitar
+        </button>
+        <button class="btn btn-outline-warning" onclick="saveFavorite()">
+          <i class="fas fa-heart"></i> Favorito
+        </button>
+      </div>
+
+      <div class="favorites-section">
+        <h5 class="text-white"><i class="fa-solid fa-star" style="color: #FFD43B;"> Favoritos</i> </h5>
+        <ul id="favorites" class="list-group"></ul>
+      </div>
+
+    </div>
+  </div>
+  <script src="./database.service.nuno.js"></script>
+  <script src="./dataModelsNuno.js"></script>
+</body>
+
+</html>

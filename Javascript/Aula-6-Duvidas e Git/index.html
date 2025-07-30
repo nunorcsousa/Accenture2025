@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Git Commands and Documentation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      <h2 class="mt-3">Git</h2>
+    </div>
+
+    <h3>Requirements:</h3>
+    <div class="accordion" id="accordionRequirements">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGitInstall"
+            aria-expanded="true" aria-controls="collapseGitInstall">
+            Install git
+          </button>
+        </h2>
+        <div id="collapseGitInstall" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+          data-bs-parent="#accordionRequirements">
+          <div class="accordion-body">
+            <a href="https://git-scm.com/" target="_blank">Git documentation</a>
+            <h5>Notes:</h5>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Git command:</h3>
+    <div class="accordion" id="accordionCommands">
+      <!-- Init -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingInit">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInit"
+            aria-expanded="true" aria-controls="collapseInit">
+            git init
+          </button>
+        </h2>
+        <div id="collapseInit" class="accordion-collapse collapse show" aria-labelledby="headingInit"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <h5>Notes:</h5>
+            <p>git-init - Create an empty Git repository or reinitialize an existing one</p>
+          </div>
+        </div>
+      </div>
+      <!-- Remote -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingRemote">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseRemote"
+            aria-expanded="false" aria-controls="collapseRemote">
+            git remote
+          </button>
+        </h2>
+        <div id="collapseRemote" class="accordion-collapse collapse" aria-labelledby="headingRemote"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <h5>Notes:</h5>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+      <!-- Branch -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingBranch">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseBranch" aria-expanded="false" aria-controls="collapseBranch">
+            git branch
+          </button>
+        </h2>
+        <div id="collapseBranch" class="accordion-collapse collapse" aria-labelledby="headingBranch"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <h5>Notes:</h5>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+      <!-- Add -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingAdd">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseAdd" aria-expanded="false" aria-controls="collapseAdd">
+            git add
+          </button>
+        </h2>
+        <div id="collapseAdd" class="accordion-collapse collapse" aria-labelledby="headingAdd"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <h5>Notes:</h5>
+            <code>git add .</code>
+            <p>This command stages all changes in the current directory and its subdirectories. Be cautious as it may
+              include unintended files.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Commit -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingCommit">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseCommit" aria-expanded="false" aria-controls="collapseCommit">
+            git commit
+          </button>
+        </h2>
+        <div id="collapseCommit" class="accordion-collapse collapse" aria-labelledby="headingCommit"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <p>git-commit - Record changes to the repository</p>
+            <h5>Notes:</h5>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+      <!-- Push -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingPush">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapsePush" aria-expanded="false" aria-controls="collapsePush">
+            git push
+          </button>
+        </h2>
+        <div id="collapsePush" class="accordion-collapse collapse" aria-labelledby="headingPush"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <h5>Notes:</h5>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+      <!-- Clone -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingClone">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseClone" aria-expanded="false" aria-controls="collapseClone">
+            git clone
+          </button>
+        </h2>
+        <div id="collapseClone" class="accordion-collapse collapse" aria-labelledby="headingClone"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <h5>Notes:</h5>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+      <!-- Pull -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingPull">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapsePull" aria-expanded="false" aria-controls="collapsePull">
+            git pull
+          </button>
+        </h2>
+        <div id="collapsePull" class="accordion-collapse collapse" aria-labelledby="headingPull"
+          data-bs-parent="#accordionCommands">
+          <div class="accordion-body">
+            <h5>Notes:</h5>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>

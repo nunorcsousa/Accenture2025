@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Pedidos McDonald's</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-4">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">McPedidos</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#criar">Criar Pedido</a></li>
+          <li class="nav-item"><a class="nav-link" href="#remover">Remover Pedido</a></li>
+          <li class="nav-item"><a class="nav-link" href="#ativos">Pedidos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Criar Pedido -->
+  <section id="criar" class="mb-5">
+    <h2>Criar Pedido</h2>
+    <div class="mb-3">
+      <label for="nomeCliente" class="form-label">Nome do Cliente</label>
+      <input type="text" id="nomeCliente" class="form-control">
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <label>Tipo</label>
+        <select id="tipoArtigo" class="form-select">
+          <option>Sanduíche</option>
+          <option>Bebida</option>
+          <option>Acompanhamento</option>
+        </select>
+      </div>
+      <div class="col">
+        <label>Produto</label>
+        <select id="produto" class="form-select"></select>
+      </div>
+      <div class="col">
+        <label>Extra</label>
+        <select id="pedidoEspecial" class="form-select"></select>
+      </div>
+      <div class="col d-grid align-items-end">
+        <button onclick="adicionarProduto()" class="btn btn-success">Adicionar</button>
+      </div>
+    </div>
+
+    <h4>Pedido Atual</h4>
+    <table class="table">
+      <thead>
+        <tr><th>Produto</th><th>Extra</th></tr>
+      </thead>
+      <tbody id="tabelaPedido"></tbody>
+    </table>
+    <button onclick="finalizarPedido()" class="btn btn-primary">Finalizar Pedido</button>
+  </section>
+
+  <!-- Modal Erro -->
+  <div class="modal fade" id="modalErro" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Erro</h5>
+        </div>
+        <div class="modal-body">Insira, por favor, pelo menos um item e o seu Nome.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Serviço Cozinha -->
+  <section id="servico" class="mb-5">
+    <h2>Serviço de Cozinha</h2>
+    <div class="d-flex gap-3">
+      <div class="card p-3"><h5>Todos</h5><p id="contagemTodos">0</p></div>
+      <div class="card p-3"><h5>Com Extra</h5><p id="contagemComExtra">0</p></div>
+      <div class="card p-3"><h5>Sem Extra</h5><p id="contagemSemExtra">0</p></div>
+    </div>
+  </section>
+
+  <!-- Pedidos Ativos -->
+  <section id="ativos">
+    <h2>Pedidos Ativos</h2>
+    <select id="filtroTipo" class="form-select w-25 mb-2">
+      <option value="todos">Todos</option>
+      <option value="Sanduíche">Sanduíche</option>
+      <option value="Bebida">Bebida</option>
+      <option value="Acompanhamento">Acompanhamento</option>
+    </select>
+    <div id="listaPedidos"></div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const tipoArtigo = document.getElementById('tipoArtigo');
+    const produto = document.getElementById('produto');
+    const pedidoEspecial = document.getElementById('pedidoEspecial');
+    const tabelaPedido = document.getElementById('tabelaPedido');
+    const listaPedidos = document.getElementById('listaPedidos');
+    const filtroTipo = document.getElementById('filtroTipo');
+
+    const produtosPorTipo = {
+      'Sanduíche': ['Big Mac', 'McChicken', 'Chicken Bacon', 'Big Tasty'],
+      'Bebida': ['Coca-Cola', 'Coca-Cola 0', 'Ice Tea'],
+      'Acompanhamento': ['Batatas', 'Salada', 'Chicken Nuggets', 'Chicken Wings']
+    };
+
+    const extrasPorTipo = {
+      'Sanduíche': ['Normal', 'Sem alface', 'Sem tomate', 'Sem cebola'],
+      'Bebida': ['Normal', 'Sem gelo'],
+      'Acompanhamento': ['Normal']
+    };
+
+    let pedidoAtual = [];
+    let pedidos = [];
+
+    tipoArtigo.addEventListener('change', atualizarCampos);
+    filtroTipo.addEventListener('change', renderPedidos);
+
+    function atualizarCampos() {
+      const tipo = tipoArtigo.value;
+      produto.innerHTML = produtosPorTipo[tipo].map(p => `<option>${p}</option>`).join('');
+      pedidoEspecial.innerHTML = extrasPorTipo[tipo].map(e => `<option>${e}</option>`).join('');
+    }
+
+    function adicionarProduto() {
+      pedidoAtual.push({
+        tipo: tipoArtigo.value,
+        nome: produto.value,
+        extra: pedidoEspecial.value
+      });
+      renderTabelaPedido();
+    }
+
+    function renderTabelaPedido() {
+      tabelaPedido.innerHTML = '';
+      pedidoAtual.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${item.nome}</td><td>${item.extra}</td>`;
+        tabelaPedido.appendChild(tr);
+      });
+    }
+
+    function finalizarPedido() {
+      const nome = document.getElementById('nomeCliente').value.trim();
+      if (!nome || pedidoAtual.length === 0) {
+        return new bootstrap.Modal(document.getElementById('modalErro')).show();
+      }
+      pedidos.push({ cliente: nome, itens: [...pedidoAtual] });
+      pedidoAtual = [];
+      renderTabelaPedido();
+      document.getElementById('nomeCliente').value = '';
+      atualizarEstatisticas();
+      renderPedidos();
+    }
+
+    function atualizarEstatisticas() {
+      document.getElementById('contagemTodos').textContent = pedidos.length;
+      document.getElementById('contagemComExtra').textContent = pedidos.filter(p =>
+        p.itens.some(i => i.extra !== 'Normal')).length;
+      document.getElementById('contagemSemExtra').textContent = pedidos.filter(p =>
+        p.itens.every(i => i.extra === 'Normal')).length;
+    }
+
+    function renderPedidos() {
+      const filtro = filtroTipo.value;
+      listaPedidos.innerHTML = pedidos.map(p => {
+        const itensFiltrados = p.itens.filter(i => filtro === 'todos' || i.tipo === filtro);
+        if (itensFiltrados.length === 0) return '';
+        return `<div class="card p-2 mb-2">
+                  <h5>${p.cliente}</h5>
+                  <ul>${itensFiltrados.map(i => `<li>${i.tipo} - ${i.nome} (${i.extra})</li>`).join('')}</ul>
+                </div>`;
+      }).join('');
+    }
+
+    atualizarCampos();
+  </script>
+</body>
+
+</html>

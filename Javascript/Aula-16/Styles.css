@@ -1,0 +1,74 @@
+body {
+    background: linear-gradient(to right, #271e42, #47435a);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+#appContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.card-stack {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 500px;
+}
+
+.book-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.card-img-top {
+    max-height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+img.cover {
+    max-height: 200px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.swipe-buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.favorites-section {
+    max-width: 400px;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.app-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.category-select {
+    max-width: 300px;
+}

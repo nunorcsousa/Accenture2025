@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body class="vh-100 d-flex">
+
+    <div id="login" class="container m-auto text-center">
+        <img src="http://4.bp.blogspot.com/-wfKljZdWhEc/VQCbSwlRJ4I/AAAAAAAAAFY/3CgldU6MNy4/w1200-h630-p-k-no-nu/tinderfordummies.jpg" class="mw-100">
+        <div class="form-group mb-5">
+            <label for="username">Enter Username</label>
+            <input type="text" class="form-control" id="username" onkeypress="inputEnter(event, 'login')" placeholder="Username">
+        </div>
+        <button class="btn btn-primary mt-5" onclick="getUserByUsername()">Login / Register</button>
+    </div>
+
+    <div id="main" class="container d-none">
+        <div id="header"></div>
+        <div class="accordion" id="accordionExample">
+            <div class="bg-success">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn text-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Settings
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <input id="h-search" onkeypress="inputEnter(event, 'booksearch')" class="form-control mr-sm-2" type="search" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center h-75 d-flex">
+            <div class="m-auto">
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="getBooksFromGoogle()">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js " integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin=" anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js " integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1 " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous "></script>
+    <script>
+        currentUser = {};
+
+        function inputEnter(event, input) {
+            const char = event.code;
+            const key = event.key;
+            if (char === 'Enter' || key === 'Enter') {
+                if (input === "login") {
+                    getUserByUsername();
+                } else if (input === "booksearch") {
+                    getBooksFromGoogle();
+                }
+            }
+        }
+
+        function stateView() {
+            if (currentUser.id != undefined) {
+                $("#login ").addClass("d-none ");
+                $("#main ").removeClass("d-none ");
+                updateHeader();
+            } else {
+                $("#login ").removeClass("d-none ");
+                $("#main ").addClass("d-none ");
+            }
+        }
+
+        function updateHeader() {
+            $("#header ").html(`
+
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand" href="#">UpAcademy Tinder</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <span class="navbar-text">Welcome ${currentUser.username}</span>
+                        </li>
+                        </ul>
+                        <div class="form-inline my-2 my-lg-0">
+                        <button class="btn btn-outline-danger my-2 my-sm-0" onclick="logout()">Logout</button>
+                        </div>
+
+                    </div>
+                </nav>
+            `);
+        }
+
+        function getUserByUsername() {
+            let username = $("#username ").val();
+            $.get('https://aai-books-852480dfe047.herokuapp.com/api/users/?filter={"where ":{"username ":" ' + username + ' "},"include ":"books "}')
+                .done(function(data) {
+                    if (data.length == 0) {
+                        addUser(username);
+                    } else {
+                        currentUser = data[0];
+                        stateView();
+                    }
+                }).fail(function(data) {
+                    console.error("Erro : ", data);
+                });
+        }
+
+        function addUser(username) {
+            tempUser = {
+                username: username
+            }
+            $.post('https://aai-books-852480dfe047.herokuapp.com/api/users',
+                tempUser).done(function(data) {
+                currentUser = data;
+                stateView();
+            }).fail(function(data) {
+                console.error("Erro : ", data);
+            });
+        }
+
+        function deleteUserById() {
+            let id = $("#userId ").val();
+            $.ajax({
+                url: 'https://aai-books-852480dfe047.herokuapp.com/api/users/' +
+                    id,
+                type: 'DELETE',
+                success: function(result) {
+                    console.log("Deleted ");
+                }
+            });
+        }
+
+        function updateUserById() {
+            currentUser.username = $("#currentUsername ").val();
+            $.ajax({
+                url: 'https://aai-books-852480dfe047.herokuapp.com/api/users/' + currentUser.id,
+                type: 'PUT',
+                data: currentUser,
+                success: function(result) {
+                    console.log("Updated ");
+                }
+            });
+        }
+
+        function addBook() {
+            let tempBook = {
+                name: $("#bookName ").val()
+            }
+            $.post('https://aai-books-852480dfe047.herokuapp.com/api/users/' + currentUser.id + '/books',
+                tempBook).done(function(data) {
+                console.log(data);
+            }).fail(function(data) {
+                console.error("Erro : ", data);
+            });
+        }
+
+        function getBooksFromGoogle() {
+            console.log("getBooksFromGoogle function", $("#h-search").val());
+        }
+
+        function logout() {
+            currentUser = {};
+            stateView();
+        }
+    </script>
+</body>
+
+</html>
