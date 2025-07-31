@@ -51,7 +51,7 @@ public class Product extends MyEntity {
 	public int getIva() {
 		switch (iva) {
 		case 6:
-		case 13:
+		case 11:
 		case 23:
 			break;
 		default:
