@@ -16,15 +16,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import io.altar.jseproject.dtos.ProductDTO;
-import io.altar.jseproject.mappers.ProductMapper;
-import io.altar.jseproject.model.Product;
-import io.altar.jseproject.services.ProductService;
+import io.altar.jseproject.dtos.ShelfDTO;
+import io.altar.jseproject.mappers.ShelfMapper;
+import io.altar.jseproject.model.Shelf;
+import io.altar.jseproject.services.ShelfService;
 
-@Path("products")
-public class ProductController {
+@Path("/shelves")
+public class ShelfController {
 
-	private final ProductService productService = new ProductService();
+	private ShelfService shelfService = new ShelfService();
 
 	@Context
 	protected UriInfo context;
@@ -40,9 +40,9 @@ public class ProductController {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(ProductDTO dto) {
-		Product product = ProductMapper.fromDTO(dto);
-		Long id = productService.create(product);
+	public Response create(ShelfDTO dto) {
+		Shelf shelf = ShelfMapper.fromDTO(dto);
+		Long id = shelfService.create(shelf);
 		return Response.status(Response.Status.CREATED).entity(id).build();
 	}
 
@@ -50,10 +50,10 @@ public class ProductController {
 	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<ProductDTO> getAll() {
-		List<ProductDTO> result = new ArrayList<>();
-		for (Product s : productService.getAll()) {
-			result.add(ProductMapper.toDTO(s));
+	public List<ShelfDTO> getAll() {
+		List<ShelfDTO> result = new ArrayList<>();
+		for (Shelf s : shelfService.getAll()) {
+			result.add(ShelfMapper.toDTO(s));
 		}
 		return result;
 	}
@@ -63,25 +63,25 @@ public class ProductController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getById(@PathParam("id") long id) {
-		Product product = productService.getById(id);
-		if (product == null) {
+		Shelf shelf = shelfService.getById(id);
+		if (shelf == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
-		return Response.ok(ProductMapper.toDTO(product)).build();
+		return Response.ok(ShelfMapper.toDTO(shelf)).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") long id, ProductDTO dto) {
-		Product existing = productService.getById(id);
+	public Response update(@PathParam("id") long id, ShelfDTO dto) {
+		Shelf existing = shelfService.getById(id);
 		if (existing == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
-		Product updated = ProductMapper.fromDTO(dto);
-		updated.setId(id); // forçar consistência
-		productService.update(updated);
+		Shelf updated = ShelfMapper.fromDTO(dto);
+		updated.setId(id); // garantir consistência
+		shelfService.update(updated);
 		return Response.ok().build();
 	}
 
@@ -90,12 +90,11 @@ public class ProductController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
-		Product product = productService.getById(id);
-		if (product == null) {
+		Shelf existing = shelfService.getById(id);
+		if (existing == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
-		productService.delete(id);
+		shelfService.delete(id);
 		return Response.ok().build();
 	}
-
 }

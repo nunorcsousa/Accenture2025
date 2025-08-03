@@ -3,6 +3,9 @@ package io.altar.jseproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Product extends MyEntity {
     private String name;
     private double price;
@@ -10,17 +13,18 @@ public class Product extends MyEntity {
     private int iva;
     private double pvp;
     private int quantity;
-    private Set<Long> shelfIds = new HashSet<>(); // Pode estar em várias prateleiras
+	private Set<Long> shelfIds = new HashSet<>(); 
     
+    public Product() {};
 
-
-    public Product(String name, double price, int discount, int iva, int quantity) {
+    public Product(String name, double price, int discount, int iva, int quantity, Set<Long> shelfIds ) {
         this.name = name;
         this.price = price;
         this.discount = discount;
         this.iva = iva;
         this.pvp = calculatePVP();
         this.quantity = quantity;
+        this.shelfIds = shelfIds;
     }
 
     private double calculatePVP() {
@@ -100,6 +104,10 @@ public class Product extends MyEntity {
     	this.shelfIds.remove(shelfId); 
     }
     
+	public void setShelfIds(Set<Long> shelfIds) {
+		this.shelfIds = shelfIds;
+	}
+
 	@Override
 	public String toString() {
 		return "Produto [name=" + name + ", Preço=" + price + ", Desconto=" + discount + ", IVA=" + iva + ", PVP=" + pvp

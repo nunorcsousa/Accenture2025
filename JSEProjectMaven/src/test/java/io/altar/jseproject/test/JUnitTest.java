@@ -19,8 +19,8 @@ public class JUnitTest {
 	
 	@Test
     public void testGetAllProducts() {
-        Product p1 = new Product(null, 0, 0, 0, 0);
-        Product p2 = new Product(null, 0, 0, 0, 0);
+        Product p1 = new Product(null, 0, 0, 0, 0, null);
+        Product p2 = new Product(null, 0, 0, 0, 0, null);
         repositoryP.create(p1);
         repositoryP.create(p2);
         Collection<Product> all = repositoryP.getAll();
@@ -30,7 +30,7 @@ public class JUnitTest {
 	
 	@Test
     public void testIvaProducts() {
-		Product p = new Product(null, 0, 0, 33, 0);;
+		Product p = new Product(null, 0, 0, 33, 0, null);;
 		assertThrows(NumberFormatException.class,
 	            ()->{ p.getIva(); });
 		p.setIva(23);

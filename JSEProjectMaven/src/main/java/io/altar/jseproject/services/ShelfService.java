@@ -9,6 +9,8 @@ public class ShelfService extends EntityService{
 	
 	private ShelfRepository shelfRepo = ShelfRepository.getInstance();
 
+	public ShelfService() {};
+	
     public Long create(Shelf entity) {
         return shelfRepo.create(entity);
     }

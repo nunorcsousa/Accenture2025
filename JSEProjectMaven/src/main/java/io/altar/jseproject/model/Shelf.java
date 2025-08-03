@@ -1,11 +1,16 @@
 package io.altar.jseproject.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Shelf extends MyEntity {
 	private int capacity;
 	private int used;
     private int currentQuantity;
-    private Long productId; // Apenas um produto por prateleira
+    private Long productId; 
     private double dailyPrice;
+    
+    public Shelf() {};
 
     public Shelf(int capacity, double dailyPrice) {
         this.capacity = capacity;

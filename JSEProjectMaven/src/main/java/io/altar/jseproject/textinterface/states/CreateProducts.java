@@ -18,7 +18,7 @@ public class CreateProducts extends State {
         int iva = new Utils().readInt("IVA (%):", 0, 100);
         int quantity = new Utils().readInt("Quantidade:", 1, 9999);
         
-        Product p = new Product(name, price, discount, iva, quantity);
+        Product p = new Product(name, price, discount, iva, quantity, null);
         Long id = ps.create(p);
         new CommonProductShell().allocateProductToShelves(id);
         System.out.println("Produto criado com ID: " + id);
