@@ -30,7 +30,7 @@
  </dependencies>
  
  <build>
-  <finalName>JSEProjectMaven</finalName>
+  <finalName>JEEProjectMaven</finalName>
   <plugins>
    <!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
