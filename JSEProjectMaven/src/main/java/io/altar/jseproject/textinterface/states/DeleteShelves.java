@@ -22,7 +22,7 @@ public class DeleteShelves extends State {
             return 1;
         }
         // Limpar referência no produto
-        if (shelf.getProductId() != null) {
+        if (shelf.getProductId() != 0) {
             Product product = ps.getById(shelf.getProductId());
             if (product != null) {
                 product.removeShelfId(shelf.getId());

@@ -25,7 +25,7 @@ public class DeleteProducts extends State {
         for (Long shelfId : product.getShelfIds()) {
             Shelf shelf = ss.getById(shelfId);
             if (shelf != null && id.equals(shelf.getProductId())) {
-                shelf.setProductId(null);
+                shelf.setProductId(0);
                 shelf.setCurrentQuantity(0);
                 ss.update(shelf);
             }

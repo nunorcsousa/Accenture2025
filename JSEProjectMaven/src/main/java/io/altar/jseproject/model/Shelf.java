@@ -7,7 +7,7 @@ public class Shelf extends MyEntity {
 	private int capacity;
 	private int used;
     private int currentQuantity;
-    private Long productId; 
+    private long productId; 
     private double dailyPrice;
     
     public Shelf() {};
@@ -58,11 +58,11 @@ public class Shelf extends MyEntity {
         return currentQuantity + quantity <= capacity;
     }
     
-    public Long getProductId() { 
+    public long getProductId() { 
     	return productId; 
     }
     
-    public void setProductId(Long productId) { 
+    public void setProductId(long productId) { 
     	this.productId = productId; 
     }
     

@@ -3,14 +3,16 @@ package io.altar.jseproject.dtos;
 public class ShelfDTO {
 	public long id;
     public int capacity;
+    public double dailyPrice;
     public int currentQuantity;
     public long productId;
 
     public ShelfDTO() {} // Necessário para serialização/deserialização JSON
 
-    public ShelfDTO(long id, int capacity, int currentQuantity, long productId) {
+    public ShelfDTO(long id, int capacity, int currentQuantity, long productId, double dailyPrice) {
         this.id = id;
         this.capacity = capacity;
+        this.dailyPrice = dailyPrice;
         this.currentQuantity = currentQuantity;
         this.productId = productId;
     }
@@ -29,6 +31,14 @@ public class ShelfDTO {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+
+	public double getDailyPrice() {
+		return dailyPrice;
+	}
+
+	public void setDailyPrice(double dailyPrice) {
+		this.dailyPrice = dailyPrice;
 	}
 
 	public int getCurrentQuantity() {

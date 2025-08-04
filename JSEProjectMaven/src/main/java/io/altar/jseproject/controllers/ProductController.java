@@ -52,8 +52,8 @@ public class ProductController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public List<ProductDTO> getAll() {
 		List<ProductDTO> result = new ArrayList<>();
-		for (Product s : productService.getAll()) {
-			result.add(ProductMapper.toDTO(s));
+		for (Product p : productService.getAll()) {
+			result.add(ProductMapper.toDTO(p));
 		}
 		return result;
 	}

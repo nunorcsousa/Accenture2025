@@ -10,7 +10,8 @@ public class ShelfMapper {
             shelf.getId(),
             shelf.getCapacity(),
             shelf.getCurrentQuantity(),
-            shelf.getProductId()
+            shelf.getProductId(),
+            shelf.getDailyPrice()
         );
     }
 
@@ -20,6 +21,7 @@ public class ShelfMapper {
         shelf.setCapacity(dto.capacity);
         shelf.setCurrentQuantity(dto.currentQuantity);
         shelf.setProductId(dto.productId);
+        shelf.setDailyPrice(dto.dailyPrice);
         return shelf;
     }
 }

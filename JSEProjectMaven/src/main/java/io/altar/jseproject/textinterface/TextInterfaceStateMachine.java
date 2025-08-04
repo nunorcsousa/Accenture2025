@@ -1,6 +1,17 @@
 package io.altar.jseproject.textinterface;
 
-import io.altar.jseproject.textinterface.states.*;
+import io.altar.jseproject.textinterface.states.CreateProducts;
+import io.altar.jseproject.textinterface.states.CreateShelves;
+import io.altar.jseproject.textinterface.states.DeleteProducts;
+import io.altar.jseproject.textinterface.states.DeleteShelves;
+import io.altar.jseproject.textinterface.states.MenuInit;
+import io.altar.jseproject.textinterface.states.MenuProducts;
+import io.altar.jseproject.textinterface.states.MenuShelves;
+import io.altar.jseproject.textinterface.states.ReadProducts;
+import io.altar.jseproject.textinterface.states.ReadShelves;
+import io.altar.jseproject.textinterface.states.State;
+import io.altar.jseproject.textinterface.states.UpdateProducts;
+import io.altar.jseproject.textinterface.states.UpdateShelves;
 
 
 //1. Create a "wrapper" class that models the state machine

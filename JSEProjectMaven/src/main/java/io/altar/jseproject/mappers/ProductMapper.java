@@ -11,7 +11,6 @@ public class ProductMapper {
 
     public static ProductDTO toDTO(Product p) {
         StringBuilder shelfSummary = new StringBuilder();
-
         if (p.getShelfIds() != null) {
             for (Long sid : p.getShelfIds()) {
                 Shelf shelf = shelfService.getById(sid);
