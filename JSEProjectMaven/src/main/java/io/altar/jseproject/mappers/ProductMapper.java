@@ -2,30 +2,10 @@ package io.altar.jseproject.mappers;
 
 import io.altar.jseproject.dtos.ProductDTO;
 import io.altar.jseproject.model.Product;
-import io.altar.jseproject.model.Shelf;
-import io.altar.jseproject.services.ShelfService;
 
 public class ProductMapper {
 
-    private static final ShelfService shelfService = new ShelfService();
-
     public static ProductDTO toDTO(Product p) {
-        StringBuilder shelfSummary = new StringBuilder();
-        if (p.getShelfIds() != null) {
-            for (Long sid : p.getShelfIds()) {
-                Shelf shelf = shelfService.getById(sid);
-                if (shelf != null) {
-                    shelfSummary.append("Shelf ")
-                                .append(shelf.getId())
-                                .append(" [")
-                                .append(shelf.getCurrentQuantity())
-                                .append("/")
-                                .append(shelf.getCapacity())
-                                .append("]; ");
-                }
-            }
-        }
-
         return new ProductDTO(
             p.getId(),
             p.getName(),
@@ -33,8 +13,7 @@ public class ProductMapper {
             p.getDiscount(),
             p.getIva(),
             p.getQuantity(),
-            p.getShelfIds(),
-            shelfSummary.toString().trim()
+            p.getShelfIds()
         );
     }
 

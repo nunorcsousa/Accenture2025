@@ -10,12 +10,11 @@ public class ProductDTO {
     public int iva;
     public int quantity;
     public Set<Long> shelfIds;
-    public String shelfSummary;
 
     public ProductDTO() {} // Required for deserialization
 
     public ProductDTO(long id, String name, double price, int discount, int iva, int quantity,
-                      Set<Long> shelfIds, String shelfSummary) {
+                      Set<Long> shelfIds) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -23,7 +22,6 @@ public class ProductDTO {
         this.iva = iva;
         this.quantity = quantity;
         this.shelfIds = shelfIds;
-        this.shelfSummary = shelfSummary;
     }
 
 	public long getId() {
@@ -58,13 +56,6 @@ public class ProductDTO {
 		this.shelfIds = shelfIds;
 	}
 
-	public String getShelfSummary() {
-		return shelfSummary;
-	}
-
-	public void setShelfSummary(String shelfSummary) {
-		this.shelfSummary = shelfSummary;
-	}
 	public int getDiscount() {
 		return discount;
 	}
