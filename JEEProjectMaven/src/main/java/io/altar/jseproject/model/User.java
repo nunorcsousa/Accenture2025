@@ -3,8 +3,13 @@ package io.altar.jseproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class User extends MyEntity {
     private String name;
+    private String username;
+    private String password;
     private Set<Long> storeIds = new HashSet<>();
 
     // Getters & Setters
@@ -16,7 +21,23 @@ public class User extends MyEntity {
         this.name = name;
     }
 
-    public Set<Long> getStoreIds() {
+    public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Long> getStoreIds() {
         return storeIds;
     }
 

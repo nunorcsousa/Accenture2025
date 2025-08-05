@@ -102,6 +102,8 @@ public class UserController {
         UserDTO dto = new UserDTO();
         dto.id = u.getId();
         dto.name = u.getName();
+        dto.username = u.getUsername();
+        dto.password = u.getPassword();
         dto.storeIds = u.getStoreIds();
         return dto;
     }
@@ -110,6 +112,8 @@ public class UserController {
         User u = new User();
         u.setId(dto.id);
         u.setName(dto.name);
+        u.setUsername(dto.username);
+        u.setPassword(dto.password);
         u.setStoreIds(dto.storeIds);
         return u;
     }

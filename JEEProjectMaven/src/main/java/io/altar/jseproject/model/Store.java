@@ -3,6 +3,9 @@ package io.altar.jseproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Store extends MyEntity {
     private String name;
     private Set<Long> userIds = new HashSet<>();
