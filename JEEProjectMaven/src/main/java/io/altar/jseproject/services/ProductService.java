@@ -1,13 +1,23 @@
 package io.altar.jseproject.services;
 
 import java.util.Collection;
+import java.io.Serializable;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.repositories.ProductRepository;
 
-public class ProductService extends EntityService{
+@RequestScoped
+public class ProductService extends EntityService implements Serializable{
 	
-	private ProductRepository productRepo = ProductRepository.getInstance();
+	private static final long serialVersionUID = 1149251039409861914L;
+	
+	@Inject
+	private ProductRepository productRepo;
+	
+	public ProductService(){};
 	
     public Long create(Product entity) {
         return productRepo.create(entity);

@@ -1,8 +1,11 @@
 package io.altar.jseproject.controllers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,9 +25,17 @@ import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.services.ShelfService;
 
 @Path("/shelves")
-public class ShelfController {
-
-	private ShelfService shelfService = new ShelfService();
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@RequestScoped
+public class ShelfController implements Serializable{
+	
+	private static final long serialVersionUID = 1149251039409861914L;
+	
+	public ShelfController(){};
+	
+	@Inject
+	private ShelfService shelfService;
 
 	@Context
 	protected UriInfo context;

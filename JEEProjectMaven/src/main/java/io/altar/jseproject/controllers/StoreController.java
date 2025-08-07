@@ -1,8 +1,11 @@
 package io.altar.jseproject.controllers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,8 +26,15 @@ import io.altar.jseproject.services.StoreService;
 @Path("/Stores")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class StoreController {
-	private StoreService storeService = new StoreService();
+@RequestScoped
+public class StoreController implements Serializable{
+	
+	private static final long serialVersionUID = 1149251039409861914L;
+	
+	@Inject
+	private StoreService storeService;
+	
+	public StoreController() {};
 
 	@Context
 	protected UriInfo context;

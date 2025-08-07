@@ -3,10 +3,8 @@ package io.altar.jseproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-public class Product extends MyEntity {
+public class Product extends MyEntity{
+	
     private String name;
     private double price;
     private int discount;

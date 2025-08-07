@@ -3,10 +3,8 @@ package io.altar.jseproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-public class User extends MyEntity {
+public class User extends MyEntity{
+	
     private String name;
     private String username;
     private String password;

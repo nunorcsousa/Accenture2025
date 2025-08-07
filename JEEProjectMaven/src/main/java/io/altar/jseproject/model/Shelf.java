@@ -1,9 +1,8 @@
 package io.altar.jseproject.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public class Shelf extends MyEntity {
+public class Shelf extends MyEntity{
+	
 	private int capacity;
 	private int used;
     private int currentQuantity;

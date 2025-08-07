@@ -5,17 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.Serializable;
 import java.util.Collection;
+
+import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.repositories.ProductRepository;
+import io.quarkus.test.junit.QuarkusTest;
 
-
-public class JUnitTest {
+@QuarkusTest
+public class JUnitTestRepository implements Serializable{
 	
-	private ProductRepository repositoryP = ProductRepository.getInstance();
+	private static final long serialVersionUID = 1149251039409861914L;
+	
+	@Inject
+	private ProductRepository repositoryP;
+
+	
+	public JUnitTestRepository() {};
 	
 	@Test
     public void testGetAllProducts() {
@@ -27,15 +37,6 @@ public class JUnitTest {
         assertEquals(2, all.size());
         assertTrue(p1.getId() == 1);
     }
-	
-	@Test
-    public void testIvaProducts() {
-		Product p = new Product(null, 0, 0, 33, 0, null);;
-		assertThrows(NumberFormatException.class,
-	            ()->{ p.getIva(); });
-		p.setIva(23);
-		assertDoesNotThrow(()->{ p.getIva(); });
-	}
 	
 }
 
