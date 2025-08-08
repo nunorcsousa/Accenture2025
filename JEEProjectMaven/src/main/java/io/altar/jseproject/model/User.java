@@ -1,25 +1,58 @@
 package io.altar.jseproject.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class User extends MyEntity{
-	
-    private String name;
-    private String username;
-    private String password;
-    private Set<Long> storeIds = new HashSet<>();
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-    // Getters & Setters
-    public String getName() {
-        return name;
-    }
+//public class User extends MyEntity{
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private static final long serialVersionUID = 1L;
 
-    public String getUsername() {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String name;
+	private String username;
+	private String password;
+	private String email;
+
+	@ManyToMany
+	@JoinTable(name = "user_store", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "store_id"))
+	private Set<Store> stores = new HashSet<>();
+
+	public User() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
 		return username;
 	}
 
@@ -35,12 +68,26 @@ public class User extends MyEntity{
 		this.password = password;
 	}
 
-	public Set<Long> getStoreIds() {
-        return storeIds;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setStoreIds(Set<Long> storeIds) {
-        this.storeIds = storeIds;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Set<Store> getStores() {
+		return stores;
+	}
+
+	public void setStores(Set<Store> stores) {
+		this.stores = stores;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", email="
+				+ email + ", stores=" + stores + "]";
+	}
+
 }
-

@@ -17,15 +17,15 @@ public class ProductService extends EntityService{
 	public ProductService(){};
 	
     public Long create(Product entity) {
-        return productRepo.create(entity);
+        return productRepo.save(entity);
     }
 
     public Product getById(Long id) {
-        return productRepo.getById(id);
+        return productRepo.findById(id);
     }
 
     public Collection<Product> getAll() {
-        return productRepo.getAll();
+        return productRepo.findAll();
     }
 
     public void update(Product entity) {

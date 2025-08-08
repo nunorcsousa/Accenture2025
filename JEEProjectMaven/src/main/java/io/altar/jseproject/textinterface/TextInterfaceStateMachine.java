@@ -1,5 +1,9 @@
 package io.altar.jseproject.textinterface;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import io.altar.jseproject.textinterface.states.CreateProducts;
 import io.altar.jseproject.textinterface.states.CreateShelves;
 import io.altar.jseproject.textinterface.states.DeleteProducts;
@@ -15,19 +19,50 @@ import io.altar.jseproject.textinterface.states.UpdateShelves;
 
 
 //1. Create a "wrapper" class that models the state machine
+@ApplicationScoped
 public class TextInterfaceStateMachine {
+	
+	@Inject
+	MenuInit menuInit;
+	@Inject
+	MenuProducts menuProducts;
+	@Inject
+	MenuShelves menuShelves;
+	@Inject
+	CreateShelves createShelves;
+	@Inject
+	UpdateShelves updateShelves;
+	@Inject
+	ReadShelves readShelves;
+	@Inject
+	DeleteShelves deleteShelves;
+	@Inject
+	CreateProducts createProducts;
+	@Inject
+	UpdateProducts updateProducts;
+	@Inject
+	ReadProducts readProducts;
+	@Inject
+	DeleteProducts deleteProducts;
 	// 2. states
-	private State[] states = { new MenuInit(), // State 0
-			new MenuProducts(), // State 1
-			new MenuShelves(), // State 2
-			new CreateShelves(), // State 3
-			new UpdateShelves(), // State 4
-			new ReadShelves(), // State 5
-			new DeleteShelves(), // State 6
-			new CreateProducts(), // State 7
-			new UpdateProducts(), // State 8
-			new ReadProducts(), // State 9
-			new DeleteProducts() };// State 10
+	private State[] states;
+
+	@PostConstruct
+	public void init() {
+
+		states = new State[] { menuInit, // State 0
+				menuProducts, // State 1
+				menuShelves, // State 2
+				createShelves, // State 3
+				updateShelves, // State 4
+				readShelves, // State 5
+				deleteShelves, // State 6
+				createProducts, // State 7
+				updateProducts, // State 8
+				readProducts, // State 9
+				deleteProducts };// State 10
+	}
+
 	// 4. transitions
 	private int[][] transition = { 
 			{ 1, 2 }, 

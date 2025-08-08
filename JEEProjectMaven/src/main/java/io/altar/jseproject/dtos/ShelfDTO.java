@@ -1,11 +1,11 @@
 package io.altar.jseproject.dtos;
 
 public class ShelfDTO {
-	public long id;
-    public int capacity;
-    public double dailyPrice;
-    public int currentQuantity;
-    public long productId;
+	private long id;
+    private int capacity;
+    private double dailyPrice;
+    private int currentQuantity;
+    private long productId;
 
     public ShelfDTO() {} // Necessário para serialização/deserialização JSON
 

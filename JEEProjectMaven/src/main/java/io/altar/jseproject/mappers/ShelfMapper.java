@@ -17,11 +17,11 @@ public class ShelfMapper {
 
     public static Shelf fromDTO(ShelfDTO dto) {
         Shelf shelf = new Shelf();
-        shelf.setId(dto.id);
-        shelf.setCapacity(dto.capacity);
-        shelf.setCurrentQuantity(dto.currentQuantity);
-        shelf.setProductId(dto.productId);
-        shelf.setDailyPrice(dto.dailyPrice);
+        shelf.setId(dto.getId());
+        shelf.setCapacity(dto.getCapacity());
+        shelf.setCurrentQuantity(dto.getCurrentQuantity());
+        shelf.setProductId(dto.getProductId());
+        shelf.setDailyPrice(dto.getDailyPrice());
         return shelf;
     }
 }

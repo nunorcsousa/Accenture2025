@@ -1,49 +1,66 @@
 package io.altar.jseproject.model;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Shelf extends MyEntity{
-	
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+//public class Shelf extends MyEntity{
+
+@Entity
+@Table(name = "shelves")
+public class Shelf implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private int capacity;
-	private int used;
-    private int currentQuantity;
-    private long productId; 
-    private double dailyPrice;
-    
-    public Shelf() {};
+	private int currentQuantity;
+	private double dailyPrice;
+	public long productId;
 
-    public Shelf(int capacity, double dailyPrice) {
-        this.capacity = capacity;
-        this.currentQuantity = 0;
-        this.dailyPrice = dailyPrice;
-    }
+	@ManyToMany(mappedBy = "shelves")
+	private Set<Product> products = new HashSet<>();
 
-    public int getCapacity() {
-        return capacity;
-    }
+	@ManyToOne
+	@JoinColumn(name = "store_id")
+	private Store store;
 
-    public int getUsed() {
-        return used;
-    }
+	public Shelf() {
+	};
 
-    public int getAvailableSpace() {
-        return capacity - used;
-    }
+	public Shelf(int capacity, double dailyPrice) {
+		this.capacity = capacity;
+		this.currentQuantity = 0;
+		this.dailyPrice = dailyPrice;
+	}
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setUsed(int used) {
-        this.used = used;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void addQuantity(int quantity) {
-        this.used += quantity;
-    }
+	public int getCapacity() {
+		return capacity;
+	}
 
-    public void removeQuantity(int quantity) {
-        this.used -= quantity;
-    }
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
 
 	public int getCurrentQuantity() {
 		return currentQuantity;
@@ -53,24 +70,6 @@ public class Shelf extends MyEntity{
 		this.currentQuantity = currentQuantity;
 	}
 
-    public boolean hasSpace(int quantity) {
-        return currentQuantity + quantity <= capacity;
-    }
-    
-    public long getProductId() { 
-    	return productId; 
-    }
-    
-    public void setProductId(long productId) { 
-    	this.productId = productId; 
-    }
-    
-	@Override
-	public String toString() {
-		return "Shelf [capacity=" + capacity + ", used=" + used + ", currentQuantity=" + currentQuantity
-				+  ", productId=" + productId + "]";
-	}
-
 	public double getDailyPrice() {
 		return dailyPrice;
 	}
@@ -78,6 +77,39 @@ public class Shelf extends MyEntity{
 	public void setDailyPrice(double dailyPrice) {
 		this.dailyPrice = dailyPrice;
 	}
-    
-    
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+	public Store getStore() {
+		return store;
+	}
+
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
+	public long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(long productId) {
+		this.productId = productId;
+	}
+	
+	public boolean hasSpace(int quantityToAdd) {
+	    return (currentQuantity + quantityToAdd) <= capacity;
+	}
+
+	@Override
+	public String toString() {
+		return "Shelf [id=" + id + ", capacity=" + capacity + ", currentQuantity=" + currentQuantity + ", dailyPrice="
+				+ dailyPrice + ", store=" + store + "]";
+	}
+
 }

@@ -1,14 +1,19 @@
 package io.altar.jseproject.textinterface;
 
+import javax.enterprise.context.Dependent;
+
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.services.ProductService;
 import io.altar.jseproject.services.ShelfService;
 
+@Dependent
 public class CommonProductShell {
-
-	private ProductService ps = new ProductService();
-	private ShelfService ss = new ShelfService();
+	
+	@Dependent
+	private ProductService ps;
+	@Dependent
+	private ShelfService ss;
 
 	public void listShelves() {
 		System.out.println("\n--- Lista de Prateleiras ---");
@@ -23,7 +28,7 @@ public class CommonProductShell {
 		System.out.println("\n--- Lista de Produtos ---");
 		for (Product p : ps.getAll()) {
 			System.out.println("ID: " + p.getId() + " | Nome: " + p.getName() + " | Preço: " + p.getPvp() + " | Qtd: "
-					+ p.getQuantity() + " | Prateleiras: " + p.getShelfIds());
+					+ p.getQuantity() + " | Prateleiras: " + p.getShelves());
 		}
 	}
 

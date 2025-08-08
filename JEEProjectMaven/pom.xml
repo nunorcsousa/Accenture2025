@@ -13,14 +13,21 @@
  </properties>
   
   <dependencies>
-	  <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-	  <!-- <dependency>
-	      <groupId>org.junit.jupiter</groupId>
-	      <artifactId>junit-jupiter-api</artifactId>
-	      <version>5.13.4</version>
-	      <scope>test</scope>
-	  </dependency> -->
-	  
+
+<!-- JPA API -->
+  <dependency>
+    <groupId>jakarta.persistence</groupId>
+    <artifactId>jakarta.persistence-api</artifactId>
+    <version>3.1.0</version>
+  </dependency>
+
+  <!-- Hibernate como implementação JPA -->
+  <dependency>
+    <groupId>org.hibernate.orm</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>6.2.7.Final</version>
+  </dependency>
+ 
 	  <dependency>
   <groupId>org.junit.jupiter</groupId>
   <artifactId>junit-jupiter-api</artifactId>
@@ -36,27 +43,6 @@
     <scope>test</scope>
 </dependency>
 
-<!-- JPA API -->
-  <dependency>
-    <groupId>jakarta.persistence</groupId>
-    <artifactId>jakarta.persistence-api</artifactId>
-    <version>3.1.0</version>
-  </dependency>
-
-  <!-- Hibernate como implementação JPA -->
-  <dependency>
-    <groupId>org.hibernate.orm</groupId>
-    <artifactId>hibernate-core</artifactId>
-    <version>6.2.7.Final</version>
-  </dependency>
-
-  <!-- MySQL Driver -->
-  <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-j</artifactId>
-    <version>8.4.0</version>
-  </dependency>
-	  
 	  <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
 	<dependency>
 	    <groupId>javax</groupId>
@@ -69,18 +55,6 @@
  <build>
   <finalName>JEEProjectMaven</finalName>
   <plugins>
-   <!--<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>io.altar.jseproject.pratica2.test.TextInterfaceApp</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>-->
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>

@@ -2,9 +2,28 @@ package io.altar.jseproject.textinterface.states;
 
 import java.util.Scanner;
 
-public abstract class State {
-	public static final Scanner sc = new Scanner(System.in);
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
 
+import io.altar.jseproject.services.ProductService;
+import io.altar.jseproject.services.ShelfService;
+import io.altar.jseproject.textinterface.CommonProductShell;
+
+@Dependent
+public abstract class State {
+	
+	@Inject
+	public Scanner sc;
+	
+	@Inject
+	public ProductService ps;
+	
+	@Inject
+	public ShelfService ss;
+	
+	@Inject
+	public CommonProductShell cps;
+	
 	public abstract int on();
 	
 }

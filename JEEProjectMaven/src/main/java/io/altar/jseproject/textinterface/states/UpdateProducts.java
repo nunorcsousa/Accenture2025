@@ -1,10 +1,13 @@
 package io.altar.jseproject.textinterface.states;
 
+import javax.enterprise.context.Dependent;
+
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.services.ProductService;
 import io.altar.jseproject.textinterface.CommonProductShell;
 import io.altar.jseproject.textinterface.Utils;
 
+@Dependent
 public class UpdateProducts extends State{
 	
 	private ProductService ps = new ProductService(); 

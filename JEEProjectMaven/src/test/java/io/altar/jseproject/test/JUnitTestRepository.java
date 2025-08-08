@@ -1,8 +1,6 @@
 package io.altar.jseproject.test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.Serializable;
@@ -31,9 +29,9 @@ public class JUnitTestRepository implements Serializable{
     public void testGetAllProducts() {
         Product p1 = new Product(null, 0, 0, 0, 0, null);
         Product p2 = new Product(null, 0, 0, 0, 0, null);
-        repositoryP.create(p1);
-        repositoryP.create(p2);
-        Collection<Product> all = repositoryP.getAll();
+        repositoryP.save(p1);
+        repositoryP.save(p2);
+        Collection<Product> all = repositoryP.findAll();
         assertEquals(2, all.size());
         assertTrue(p1.getId() == 1);
     }

@@ -13,19 +13,19 @@ public class ProductMapper {
             p.getDiscount(),
             p.getIva(),
             p.getQuantity(),
-            p.getShelfIds()
+            p.getShelves()
         );
     }
 
     public static Product fromDTO(ProductDTO dto) {
         Product p = new Product();
-        p.setName(dto.name);
-        p.setPrice(dto.price);
-        p.setDiscount(dto.discount);
-        p.setIva(dto.iva);
-        p.setQuantity(dto.quantity);
-        p.setShelfIds(dto.shelfIds);
-        p.setId(dto.id);
+        p.setName(dto.getName());
+        p.setPrice(dto.getPrice());
+        p.setDiscount(dto.getDiscount());
+        p.setIva(dto.getIva());
+        p.setQuantity(dto.getQuantity());
+        p.setShelves(dto.getShelfIds());
+        p.setId(dto.getId());
         return p;
     }
 }

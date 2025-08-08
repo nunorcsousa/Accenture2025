@@ -1,37 +1,86 @@
 package io.altar.jseproject.model;
 
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Store extends MyEntity{
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+//public class Store extends MyEntity{
+@Entity
+@Table(name = "stores")
+public class Store implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
-    private Set<Long> userIds = new HashSet<>();
-    private Set<Long> shelfIds = new HashSet<>();
+    private String location;
 
-    // Getters & Setters
-    public String getName() {
-        return name;
-    }
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Shelf> shelves = new HashSet<>();
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @ManyToMany(mappedBy = "stores")
+    private Set<User> users = new HashSet<>();
 
-    public Set<Long> getUserIds() {
-        return userIds;
-    }
+    public Store() {}
 
-    public void setUserIds(Set<Long> userIds) {
-        this.userIds = userIds;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Set<Long> getShelfIds() {
-        return shelfIds;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setShelfIds(Set<Long> shelfIds) {
-        this.shelfIds = shelfIds;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Set<Shelf> getShelves() {
+		return shelves;
+	}
+
+	public void setShelves(Set<Shelf> shelves) {
+		this.shelves = shelves;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	@Override
+	public String toString() {
+		return "Store [id=" + id + ", name=" + name + ", location=" + location + ", shelves=" + shelves + ", users="
+				+ users + "]";
+	}
+
+    
 }

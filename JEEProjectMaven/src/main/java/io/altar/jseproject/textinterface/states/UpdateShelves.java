@@ -1,10 +1,13 @@
 package io.altar.jseproject.textinterface.states;
 
+import javax.enterprise.context.Dependent;
+
 import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.services.ShelfService;
 import io.altar.jseproject.textinterface.CommonProductShell;
 import io.altar.jseproject.textinterface.Utils;
 
+@Dependent
 public class UpdateShelves extends State {
 	
 	private ShelfService ss = new ShelfService();
