@@ -23,7 +23,7 @@ import io.altar.jseproject.dtos.StoreDTO;
 import io.altar.jseproject.model.Store;
 import io.altar.jseproject.services.StoreService;
 
-@Path("/Stores")
+@Path("/stores")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped

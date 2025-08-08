@@ -1,18 +1,17 @@
 package io.altar.jseproject.services;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.repositories.ShelfRepository;
 
 @RequestScoped
-public class ShelfService extends EntityService implements Serializable{
+public class ShelfService extends EntityService{
 	
-	private static final long serialVersionUID = 1149251039409861914L;
-	
+	@Inject
 	private ShelfRepository shelfRepo;
 	
 	public ShelfService() {};

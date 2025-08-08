@@ -35,6 +35,27 @@
     <version>1.13.7.Final</version>
     <scope>test</scope>
 </dependency>
+
+<!-- JPA API -->
+  <dependency>
+    <groupId>jakarta.persistence</groupId>
+    <artifactId>jakarta.persistence-api</artifactId>
+    <version>3.1.0</version>
+  </dependency>
+
+  <!-- Hibernate como implementação JPA -->
+  <dependency>
+    <groupId>org.hibernate.orm</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>6.2.7.Final</version>
+  </dependency>
+
+  <!-- MySQL Driver -->
+  <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <version>8.4.0</version>
+  </dependency>
 	  
 	  <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
 	<dependency>

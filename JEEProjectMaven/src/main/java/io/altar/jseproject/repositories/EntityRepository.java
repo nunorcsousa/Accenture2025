@@ -6,6 +6,7 @@ import io.altar.jseproject.repositories.interfaces.EntityCRUDInterface;
 import java.util.*;
 
 public abstract class EntityRepository<T extends MyEntity> implements EntityCRUDInterface<T>{
+	
     protected Map<Long, T> database = new HashMap<>();
     private Long currentId = 0L;
 

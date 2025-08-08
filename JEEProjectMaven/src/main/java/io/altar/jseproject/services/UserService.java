@@ -10,9 +10,7 @@ import io.altar.jseproject.model.User;
 import io.altar.jseproject.repositories.UserRepository;
 
 @RequestScoped
-public class UserService extends EntityService implements Serializable{
-	
-	private static final long serialVersionUID = 1149251039409861914L;
+public class UserService extends EntityService{
 	
 	@Inject
 	private UserRepository userRepo;
