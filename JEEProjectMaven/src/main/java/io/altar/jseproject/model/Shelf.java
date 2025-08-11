@@ -1,16 +1,19 @@
 package io.altar.jseproject.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 //public class Shelf extends MyEntity{
@@ -28,10 +31,13 @@ public class Shelf implements Serializable {
 	private int capacity;
 	private int currentQuantity;
 	private double dailyPrice;
-	public long productId;
+	private long productId;
 
-	@ManyToMany(mappedBy = "shelves")
-	private Set<Product> products = new HashSet<>();
+	@ElementCollection
+	@CollectionTable(name = "shelf_products", joinColumns = @JoinColumn(name = "shelf_id"))
+	@MapKeyColumn(name = "product_id")
+	@Column(name = "quantity")
+	private Map<Long, Integer> products = new HashMap<>();
 
 	@ManyToOne
 	@JoinColumn(name = "store_id")
@@ -78,11 +84,11 @@ public class Shelf implements Serializable {
 		this.dailyPrice = dailyPrice;
 	}
 
-	public Set<Product> getProducts() {
+	public Map<Long, Integer> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Set<Product> products) {
+	public void setProducts(Map<Long, Integer> products) {
 		this.products = products;
 	}
 
@@ -101,9 +107,9 @@ public class Shelf implements Serializable {
 	public void setProductId(long productId) {
 		this.productId = productId;
 	}
-	
+
 	public boolean hasSpace(int quantityToAdd) {
-	    return (currentQuantity + quantityToAdd) <= capacity;
+		return (currentQuantity + quantityToAdd) <= capacity;
 	}
 
 	@Override

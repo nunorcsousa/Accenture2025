@@ -1,21 +1,50 @@
 package io.altar.jseproject.repositories;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.PersistenceContext;
 
 import io.altar.jseproject.model.User;
 
 @ApplicationScoped
 public class UserRepository { // extends EntityRepository<User>{
 
+	@PersistenceContext(unitName = "database")
+	EntityManager em;
+	
 	public UserRepository() {
 	}
 
+	 @ElementCollection
+	    @CollectionTable(
+	        name = "store_users",
+	        joinColumns = @JoinColumn(name = "store_id")
+	    )
+	    @Column(name = "user_id")
+	    private Set<Long> userIds = new HashSet<>();
+
+	    @ElementCollection
+	    @CollectionTable(
+	        name = "store_shelves",
+	        joinColumns = @JoinColumn(name = "store_id")
+	    )
+	    @MapKeyColumn(name = "shelf_id")
+	    @Column(name = "quantity")
+	    private Map<Long, Integer> shelves = new HashMap<>();
+	
 	public void save(User user) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
@@ -31,17 +60,14 @@ public class UserRepository { // extends EntityRepository<User>{
 	}
 
 	public User findById(Long id) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		return em.find(User.class, id);
 	}
 
 	public List<User> findAll() {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		return em.createQuery("FROM User", User.class).getResultList();
 	}
 
 	public void update(User user) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
@@ -57,7 +83,6 @@ public class UserRepository { // extends EntityRepository<User>{
 	}
 
 	public void delete(Long id) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();

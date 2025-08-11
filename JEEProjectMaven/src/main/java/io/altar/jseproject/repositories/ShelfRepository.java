@@ -5,17 +5,20 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 
 import io.altar.jseproject.model.Shelf;
 
 @ApplicationScoped
 public class ShelfRepository { // extends EntityRepository<Shelf> {
 
+	@PersistenceContext(unitName = "database")
+	EntityManager em;
+	
 	public ShelfRepository() {
 	}
 
 	public Long save(Shelf shelf) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
@@ -33,17 +36,14 @@ public class ShelfRepository { // extends EntityRepository<Shelf> {
 	}
 
 	public Shelf findById(Long id) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		return em.find(Shelf.class, id);
 	}
 
 	public List<Shelf> findAll() {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		return em.createQuery("FROM Shelf", Shelf.class).getResultList();
 	}
 
 	public void update(Shelf shelf) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
@@ -59,7 +59,6 @@ public class ShelfRepository { // extends EntityRepository<Shelf> {
 	}
 
 	public void delete(Long id) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();

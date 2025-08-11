@@ -12,8 +12,7 @@ import io.altar.jseproject.textinterface.CommonProductShell;
 @Dependent
 public abstract class State {
 	
-	@Inject
-	public Scanner sc;
+	public Scanner sc = new Scanner(System.in);
 	
 	@Inject
 	public ProductService ps;

@@ -67,8 +67,8 @@ public class ProductController {
         existing.setQuantity(dto.getQuantity());
 
         // Atualiza shelves
-        if (dto.getShelfIds() != null) {
-            existing.setShelves(dto.getShelfIds());
+        if (dto.getShelves() != null) {
+            existing.setShelves(dto.getShelves());
         }
 
         productService.update(existing);

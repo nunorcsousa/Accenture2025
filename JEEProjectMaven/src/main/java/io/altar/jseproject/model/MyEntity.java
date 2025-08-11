@@ -1,5 +1,8 @@
 package io.altar.jseproject.model;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public abstract class MyEntity {
     private Long id;
 

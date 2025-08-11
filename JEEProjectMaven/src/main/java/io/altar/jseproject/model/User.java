@@ -30,8 +30,12 @@ public class User implements Serializable {
 	private String email;
 
 	@ManyToMany
-	@JoinTable(name = "user_store", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "store_id"))
-	private Set<Store> stores = new HashSet<>();
+    @JoinTable(
+        name = "user_store",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "store_id")
+    )
+    private Set<Store> stores = new HashSet<>();
 
 	public User() {
 	}

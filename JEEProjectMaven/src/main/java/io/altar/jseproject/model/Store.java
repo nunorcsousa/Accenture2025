@@ -1,40 +1,53 @@
 package io.altar.jseproject.model;
 
-
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 //public class Store extends MyEntity{
 @Entity
 @Table(name = "stores")
 public class Store implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
-    private String location;
+	private String name;
+	private String location;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Shelf> shelves = new HashSet<>();
+	@ElementCollection
+	@CollectionTable(name = "store_users", joinColumns = @JoinColumn(name = "store_id"))
+	@Column(name = "user_id")
+	private Set<Long> userIds = new HashSet<>();
 
-    @ManyToMany(mappedBy = "stores")
-    private Set<User> users = new HashSet<>();
+	@ElementCollection
+	@CollectionTable(name = "store_shelves", joinColumns = @JoinColumn(name = "store_id"))
+	@MapKeyColumn(name = "shelf_id")
+	@Column(name = "quantity")
+	private Map<Long, Integer> shelves = new HashMap<>();;
 
-    public Store() {}
+	@ManyToMany(mappedBy = "stores")
+	private Set<User> users = new HashSet<>();
+
+	public Store() {
+	}
 
 	public Long getId() {
 		return id;
@@ -60,11 +73,11 @@ public class Store implements Serializable {
 		this.location = location;
 	}
 
-	public Set<Shelf> getShelves() {
+	public Map<Long, Integer> getShelves() {
 		return shelves;
 	}
 
-	public void setShelves(Set<Shelf> shelves) {
+	public void setShelves(Map<Long, Integer> shelves) {
 		this.shelves = shelves;
 	}
 
@@ -82,5 +95,4 @@ public class Store implements Serializable {
 				+ users + "]";
 	}
 
-    
 }

@@ -5,17 +5,21 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 
 import io.altar.jseproject.model.Product;
 
 @ApplicationScoped
 public class ProductRepository { // extends EntityRepository<Product> {
 
+	@PersistenceContext(unitName = "database")
+	EntityManager em;
+	
 	public ProductRepository() {
 	}
 
 	public Long save(Product product) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
+		
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
@@ -35,17 +39,14 @@ public class ProductRepository { // extends EntityRepository<Product> {
 	}
 
 	public Product findById(Long id) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		return em.find(Product.class, id);
 	}
 
 	public List<Product> findAll() {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		return em.createQuery("FROM Product", Product.class).getResultList();
 	}
 
 	public void update(Product product) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
@@ -61,7 +62,6 @@ public class ProductRepository { // extends EntityRepository<Product> {
 	}
 
 	public void delete(Long id) {
-		EntityManager em = EntityManagerUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();

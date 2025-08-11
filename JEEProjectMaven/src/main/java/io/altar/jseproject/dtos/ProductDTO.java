@@ -13,18 +13,18 @@ public class ProductDTO {
     private double discount;
     private int iva;
     private int quantity;
-    private Set<Long> shelfIds = new HashSet<>();
+    private Set<Long> shelves = new HashSet<>();
 
     public ProductDTO() {}
 
-    public ProductDTO(Long id, String name, double price, double discount, int iva, int quantity, Set<Long> shelfIds) {
+    public ProductDTO(Long id, String name, double price, double discount, int iva, int quantity, Set<Long> shelves) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.discount = discount;
         this.iva = iva;
         this.quantity = quantity;
-        this.shelfIds = (shelfIds != null) ? new HashSet<>(shelfIds) : new HashSet<>();
+        this.shelves = (shelves != null) ? new HashSet<>(shelves) : new HashSet<>();
     }
 
     // Conversão de Entity → DTO
@@ -49,8 +49,8 @@ public class ProductDTO {
         product.setDiscount(this.discount);
         product.setIva(this.iva);
         product.setQuantity(this.quantity);
-        if (this.shelfIds != null) {
-            product.setShelves(new HashSet<>(this.shelfIds));
+        if (this.shelves != null) {
+            product.setShelves(new HashSet<>(this.shelves));
         }
         return product;
     }
@@ -98,10 +98,10 @@ public class ProductDTO {
         this.quantity = quantity;
     }
 
-    public Set<Long> getShelfIds() {
-        return shelfIds;
+    public Set<Long> getShelves() {
+        return shelves;
     }
-    public void setShelfIds(Set<Long> shelfIds) {
-        this.shelfIds = shelfIds;
+    public void setShelves(Set<Long> shelfIds) {
+        this.shelves = shelves;
     }
 }

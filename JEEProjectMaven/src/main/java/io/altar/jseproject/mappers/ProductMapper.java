@@ -1,32 +1,30 @@
 package io.altar.jseproject.mappers;
 
+import java.util.HashSet;
+
+import javax.enterprise.context.ApplicationScoped;
+
 import io.altar.jseproject.dtos.ProductDTO;
 import io.altar.jseproject.model.Product;
 
+@ApplicationScoped
 public class ProductMapper {
 
-    public static ProductDTO toDTO(Product p) {
-        return new ProductDTO(
-            p.getId(),
-            p.getName(),
-            p.getPrice(),
-            p.getDiscount(),
-            p.getIva(),
-            p.getQuantity(),
-            p.getShelves()
-        );
+    public ProductDTO toDTO(Product entity) {
+        ProductDTO dto = new ProductDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setPrice(entity.getPrice());
+        dto.setShelves(entity.getShelves());
+        return dto;
     }
 
-    public static Product fromDTO(ProductDTO dto) {
-        Product p = new Product();
-        p.setName(dto.getName());
-        p.setPrice(dto.getPrice());
-        p.setDiscount(dto.getDiscount());
-        p.setIva(dto.getIva());
-        p.setQuantity(dto.getQuantity());
-        p.setShelves(dto.getShelfIds());
-        p.setId(dto.getId());
-        return p;
+    public Product toEntity(ProductDTO dto) {
+        Product entity = new Product();
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setPrice(dto.getPrice());
+        entity.setShelves(new HashSet<Long>(dto.getShelves()));
+        return entity;
     }
 }
-

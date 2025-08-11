@@ -33,9 +33,13 @@ public class Product implements Serializable {
 	private double pvp;
 	private int quantity;
 
-	@ManyToMany
-	@JoinTable(name = "product_shelf", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "shelf_id"))
-	private Set<Long> shelves = new HashSet<>();
+	@ElementCollection
+    @CollectionTable(
+        name = "product_shelves",
+        joinColumns = @JoinColumn(name = "product_id")
+    )
+    @Column(name = "shelf_id")
+    private Set<Long> shelves = new HashSet<>();
 
 	public Product() {
 	};
