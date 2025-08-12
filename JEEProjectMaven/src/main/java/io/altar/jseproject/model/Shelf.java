@@ -1,19 +1,13 @@
 package io.altar.jseproject.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 //public class Shelf extends MyEntity{
@@ -32,12 +26,6 @@ public class Shelf implements Serializable {
 	private int currentQuantity;
 	private double dailyPrice;
 	private long productId;
-
-	@ElementCollection
-	@CollectionTable(name = "shelf_products", joinColumns = @JoinColumn(name = "shelf_id"))
-	@MapKeyColumn(name = "product_id")
-	@Column(name = "quantity")
-	private Map<Long, Integer> products = new HashMap<>();
 
 	@ManyToOne
 	@JoinColumn(name = "store_id")
@@ -84,14 +72,6 @@ public class Shelf implements Serializable {
 		this.dailyPrice = dailyPrice;
 	}
 
-	public Map<Long, Integer> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Map<Long, Integer> products) {
-		this.products = products;
-	}
-
 	public Store getStore() {
 		return store;
 	}
@@ -115,7 +95,7 @@ public class Shelf implements Serializable {
 	@Override
 	public String toString() {
 		return "Shelf [id=" + id + ", capacity=" + capacity + ", currentQuantity=" + currentQuantity + ", dailyPrice="
-				+ dailyPrice + ", store=" + store + "]";
+				+ dailyPrice + ", productId=" + productId + ", store=" + store + "]";
 	}
 
 }

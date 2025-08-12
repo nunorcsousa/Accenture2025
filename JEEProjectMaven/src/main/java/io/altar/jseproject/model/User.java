@@ -31,7 +31,7 @@ public class User implements Serializable {
 
 	@ManyToMany
     @JoinTable(
-        name = "user_store",
+        name = "user_stores",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "store_id")
     )

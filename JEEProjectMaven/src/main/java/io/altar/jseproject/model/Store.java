@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
@@ -41,10 +40,7 @@ public class Store implements Serializable {
 	@CollectionTable(name = "store_shelves", joinColumns = @JoinColumn(name = "store_id"))
 	@MapKeyColumn(name = "shelf_id")
 	@Column(name = "quantity")
-	private Map<Long, Integer> shelves = new HashMap<>();;
-
-	@ManyToMany(mappedBy = "stores")
-	private Set<User> users = new HashSet<>();
+	private Map<Long, Integer> shelves = new HashMap<>();
 
 	public Store() {
 	}
@@ -81,18 +77,10 @@ public class Store implements Serializable {
 		this.shelves = shelves;
 	}
 
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
 	@Override
 	public String toString() {
-		return "Store [id=" + id + ", name=" + name + ", location=" + location + ", shelves=" + shelves + ", users="
-				+ users + "]";
+		return "Store [id=" + id + ", name=" + name + ", location=" + location + ", userIds=" + userIds + ", shelves="
+				+ shelves + "]";
 	}
 
 }
