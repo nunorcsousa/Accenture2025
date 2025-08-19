@@ -39,7 +39,7 @@
  </dependencies>
  
  <build>
-  <finalName>JSEProjectMaven</finalName>
+  <finalName>JEEProjectMaven</finalName>
   <plugins>
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
